@@ -1,0 +1,11 @@
+﻿@using TuristProject.Common.Enums
+@{
+    ViewBag.Title = "Молодь";
+}
+
+@Html.Partial("Partials/_MainContent", new ViewDataDictionary()
+{
+    {"CategoryName", "Молодь" }, {"ChartSafetyData", ViewBag.ChartSafetyData}, { "ChartComfortData", ViewBag.ChartComfortData }, { "ChartInformativeData", ViewBag.ChartInformativeData }, { "ChartStaffQualificationData", ViewBag.ChartStaffQualificationData },
+    { "TuristType", (int)ETuristType.Young }
+    //{ "GetSafeties", "GetYoungSafeties" }, { "GetComforts", "GetYoungComforts" }, { "GetInformative", "GetYoungInformative" }, { "GetStaffQualification", "GetYoungStaffQualification" },
+})

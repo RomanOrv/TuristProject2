@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="turist2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="CompanyNumber" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TuristData">
+          <Key>
+            <PropertyRef Name="TuristDataId" />
+          </Key>
+          <Property Name="TuristDataId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TuristDataType" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Residence" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Food" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Transportation" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Excursion" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TuristType">
+          <Key>
+            <PropertyRef Name="TuristTypeId" />
+          </Key>
+          <Property Name="TuristTypeId" Type="int" Nullable="false" />
+          <Property Name="TuristTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TuristTypeCompany">
+          <Key>
+            <PropertyRef Name="TuristTypeCompanyId" />
+          </Key>
+          <Property Name="TuristTypeCompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TuristTypeId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TuristData_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="TuristData" Type="Self.TuristData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="TuristData">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TuristTypeCompany_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="TuristTypeCompany" Type="Self.TuristTypeCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="TuristTypeCompany">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TuristTypeCompany_TuristType">
+          <End Role="TuristType" Type="Self.TuristType" Multiplicity="1" />
+          <End Role="TuristTypeCompany" Type="Self.TuristTypeCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TuristType">
+              <PropertyRef Name="TuristTypeId" />
+            </Principal>
+            <Dependent Role="TuristTypeCompany">
+              <PropertyRef Name="TuristTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="turist2ModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TuristData" EntityType="Self.TuristData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TuristType" EntityType="Self.TuristType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TuristTypeCompany" EntityType="Self.TuristTypeCompany" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TuristData_Company" Association="Self.FK_TuristData_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="TuristData" EntitySet="TuristData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TuristTypeCompany_Company" Association="Self.FK_TuristTypeCompany_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="TuristTypeCompany" EntitySet="TuristTypeCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TuristTypeCompany_TuristType" Association="Self.FK_TuristTypeCompany_TuristType">
+            <End Role="TuristType" EntitySet="TuristType" />
+            <End Role="TuristTypeCompany" EntitySet="TuristTypeCompany" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="turist2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyNumber" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TuristDatas" Relationship="Self.FK_TuristData_Company" FromRole="Company" ToRole="TuristData" />
+          <NavigationProperty Name="TuristTypeCompanies" Relationship="Self.FK_TuristTypeCompany_Company" FromRole="Company" ToRole="TuristTypeCompany" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TuristData">
+          <Key>
+            <PropertyRef Name="TuristDataId" />
+          </Key>
+          <Property Name="TuristDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TuristDataType" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Residence" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Food" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Transportation" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Excursion" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_TuristData_Company" FromRole="TuristData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="TuristType">
+          <Key>
+            <PropertyRef Name="TuristTypeId" />
+          </Key>
+          <Property Name="TuristTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TuristTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TuristTypeCompanies" Relationship="Self.FK_TuristTypeCompany_TuristType" FromRole="TuristType" ToRole="TuristTypeCompany" />
+        </EntityType>
+        <EntityType Name="TuristTypeCompany">
+          <Key>
+            <PropertyRef Name="TuristTypeCompanyId" />
+          </Key>
+          <Property Name="TuristTypeCompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TuristTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_TuristTypeCompany_Company" FromRole="TuristTypeCompany" ToRole="Company" />
+          <NavigationProperty Name="TuristType" Relationship="Self.FK_TuristTypeCompany_TuristType" FromRole="TuristTypeCompany" ToRole="TuristType" />
+        </EntityType>
+        <Association Name="FK_TuristData_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="TuristData" Type="Self.TuristData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="TuristData">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TuristTypeCompany_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="TuristTypeCompany" Type="Self.TuristTypeCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="TuristTypeCompany">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TuristTypeCompany_TuristType">
+          <End Role="TuristType" Type="Self.TuristType" Multiplicity="1" />
+          <End Role="TuristTypeCompany" Type="Self.TuristTypeCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TuristType">
+              <PropertyRef Name="TuristTypeId" />
+            </Principal>
+            <Dependent Role="TuristTypeCompany">
+              <PropertyRef Name="TuristTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="turist2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TuristDatas" EntityType="Self.TuristData" />
+          <EntitySet Name="TuristTypes" EntityType="Self.TuristType" />
+          <EntitySet Name="TuristTypeCompanies" EntityType="Self.TuristTypeCompany" />
+          <AssociationSet Name="FK_TuristData_Company" Association="Self.FK_TuristData_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="TuristData" EntitySet="TuristDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TuristTypeCompany_Company" Association="Self.FK_TuristTypeCompany_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="TuristTypeCompany" EntitySet="TuristTypeCompanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TuristTypeCompany_TuristType" Association="Self.FK_TuristTypeCompany_TuristType">
+            <End Role="TuristType" EntitySet="TuristTypes" />
+            <End Role="TuristTypeCompany" EntitySet="TuristTypeCompanies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="turist2ModelStoreContainer" CdmEntityContainer="turist2Entities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="turist2Model.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CompanyNumber" ColumnName="CompanyNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="turist2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TuristDatas">
+            <EntityTypeMapping TypeName="turist2Model.TuristData">
+              <MappingFragment StoreEntitySet="TuristData">
+                <ScalarProperty Name="TuristDataId" ColumnName="TuristDataId" />
+                <ScalarProperty Name="TuristDataType" ColumnName="TuristDataType" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Residence" ColumnName="Residence" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="Transportation" ColumnName="Transportation" />
+                <ScalarProperty Name="Excursion" ColumnName="Excursion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TuristTypes">
+            <EntityTypeMapping TypeName="turist2Model.TuristType">
+              <MappingFragment StoreEntitySet="TuristType">
+                <ScalarProperty Name="TuristTypeId" ColumnName="TuristTypeId" />
+                <ScalarProperty Name="TuristTypeName" ColumnName="TuristTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TuristTypeCompanies">
+            <EntityTypeMapping TypeName="turist2Model.TuristTypeCompany">
+              <MappingFragment StoreEntitySet="TuristTypeCompany">
+                <ScalarProperty Name="TuristTypeCompanyId" ColumnName="TuristTypeCompanyId" />
+                <ScalarProperty Name="TuristTypeId" ColumnName="TuristTypeId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

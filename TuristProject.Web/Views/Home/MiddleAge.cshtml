@@ -1,0 +1,11 @@
+﻿@using TuristProject.Common.Enums
+@{
+    ViewBag.Title = "Середній вік";
+}
+
+@Html.Partial("Partials/_MainContent", new ViewDataDictionary()
+{
+    {"CategoryName", "Середній вік" }, {"ChartSafetyData", ViewBag.ChartSafetyData}, { "ChartComfortData", ViewBag.ChartComfortData }, { "ChartInformativeData", ViewBag.ChartInformativeData }, { "ChartStaffQualificationData", ViewBag.ChartStaffQualificationData },
+    { "TuristType", (int)ETuristType.MiddleAge }
+    //{ "GetSafeties", "GetMiddleAgeSafeties" }, { "GetComforts", "GetMiddleAgeComforts" }, { "GetInformative", "GetMiddleAgeInformative" }, { "GetStaffQualification", "GetMiddleAgeStaffQualification" },
+})
