@@ -162,6 +162,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\dyva2.png" />
+    <Content Include="Content\images\dyva_ukraine.png" />
+    <Content Include="Content\images\palms1.PNG" />
     <Content Include="Content\libraries\kendo\2017.2.504\Default\editor.png" />
     <Content Include="Content\libraries\kendo\2017.2.504\Default\imagebrowser.png" />
     <Content Include="Content\libraries\kendo\2017.2.504\Default\indeterminate.gif" />

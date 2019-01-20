@@ -43,6 +43,13 @@
         .title-up {
             height: 2em;
         }
+
+        .body {
+            /*background-repeat: repeat-y;*/
+            background-size: 100% 100%;
+            /*background-color: lightgrey;*/
+            background-image: url('../../Content/images/dyva2.png');
+        }
     
     </style>
 
@@ -54,27 +61,29 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", style= "color: lightgrey;" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Туристи з дітьми", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Молодь", "Young", "Home")</li>
-                    <li>@Html.ActionLink("Середній вік", "MiddleAge", "Home")</li>
-                    <li>@Html.ActionLink("Третій вік", "OldAge", "Home")</li>
-                    <li>@Html.ActionLink("Всі дані", "AllData", "Home")</li>
-                </ul>
-            </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <img src="~/Content/images/dyva_ukraine.png" style=" height: 50px;" />
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Tourist.ua", "Index", "Home", new {area = ""}, new {@class = "navbar-brand", style = "color: lightgrey;"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <img src="~/Content/images/dyva_ukraine.png" style=" height: 50px;" />
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Туристи з дітьми", "Index", "Home")</li>
+                <li>@Html.ActionLink("Молодь", "Young", "Home")</li>
+                <li>@Html.ActionLink("Середній вік", "MiddleAge", "Home")</li>
+                <li>@Html.ActionLink("Третій вік", "OldAge", "Home")</li>
+                <li>@Html.ActionLink("Всі дані", "AllData", "Home")</li>
+            </ul>
         </div>
     </div>
+</div>
     <div class="container-fluid body-content">
         @RenderBody()
         <hr />

@@ -216,7 +216,7 @@ namespace TuristProject.Web.Controllers
             foreach (var m in models)
             {
                 var chart = new CyclogramChartModel();
-                chart.name = $"Туристична організація №{m.CompanyNumber}.";
+                chart.name = $"Туристичне підприємство №{m.CompanyNumber}.";
                 var data = new List<decimal>();
                 data.Add(m.AverageRateCoefficient);
                 data.Add(m.FoodCoefficient.Value);

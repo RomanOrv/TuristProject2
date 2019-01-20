@@ -17,34 +17,36 @@
 
 <div class="panel-body">
     <div class="col-lg-12">
-        <h1 class="text-center"> Категорія "@ViewBag.CategoryName"</h1>
+        <h1 class="text-center">
+            <img src="~/Content/images/dyva2.png" style="height: 100px;" /> Категорія "@ViewBag.CategoryName"  <img src="~/Content/images/dyva2.png" style="height: 100px;" />
+        </h1>
         <hr />
     </div>
     <div class="col-lg-6 block">
         <div class="row">
             <h2 class="title-up">Вагові коефіцієнти за характеристикою "Безпека"</h2>
             @(Html.Kendo().Grid<GridModel>()
-                        .Name("Safety")
-                        .Columns(columns =>
-                        {
-                            columns.Bound(p => p.CompanyNumber).Title("Номер<br/> туристичної<br/> організації");
-                            columns.Bound(p => p.ResidenceCoefficient).Title("Коефіцієнт<br/> проживання");
-                            columns.Bound(p => p.FoodCoefficient).Title("Коефіцієнт<br/> харчування");
-                            columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
-                            columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
-                            columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
-                            columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
-                                "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
-                                .Width(70);
-                            columns.Bound(p => p.TuristDataType).Hidden();
-                        })
-                        .HtmlAttributes(new { style = "margin-bottom: 15px; margin-right: 15px;" })
-                        .DataSource(dataSource => dataSource
-                            .Ajax()
-                            .PageSize(3)
-                            .ServerOperation(true)
-                            .Read(read => read.Action("GetGridTuristData", "Home").Data("safetyParams"))
-                        ))
+                  .Name("Safety")
+                  .Columns(columns =>
+                  {
+                      columns.Bound(p => p.CompanyNumber).Title("Номер<br/> туристичної<br/> організації");
+                      columns.Bound(p => p.ResidenceCoefficient).Title("Коефіцієнт<br/> проживання");
+                      columns.Bound(p => p.FoodCoefficient).Title("Коефіцієнт<br/> харчування");
+                      columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
+                      columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
+                      columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
+                      columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
+                          "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
+                          .Width(70);
+                      columns.Bound(p => p.TuristDataType).Hidden();
+                  })
+                  .HtmlAttributes(new {style = "margin-bottom: 15px; margin-right: 15px;"})
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .PageSize(3)
+                      .ServerOperation(true)
+                      .Read(read => read.Action("GetGridTuristData", "Home").Data("safetyParams"))
+                  ))
 
 
 

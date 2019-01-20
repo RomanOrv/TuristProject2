@@ -9,6 +9,7 @@ namespace TuristProject.Web.Models.Shared
 {
     public class GridModel
     {
+        [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Туристичне підприємство")]
         public int CompanyNumber { get; set; }
 
         [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Показник проживання")]
