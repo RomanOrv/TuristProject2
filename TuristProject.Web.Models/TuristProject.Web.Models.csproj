@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\BaseDictionaryDropdownModel.cs" />
+    <Compile Include="Shared\CarecteristicModel.cs" />
     <Compile Include="Shared\CyclogramChartModel.cs" />
     <Compile Include="Shared\GridModel.cs" />
   </ItemGroup>

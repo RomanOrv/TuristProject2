@@ -51,6 +51,10 @@
       <Project>{42f77b15-7c21-4831-968e-8e067473a9c2}</Project>
       <Name>TuristProject.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TuristProject.Web.Models\TuristProject.Web.Models.csproj">
+      <Project>{22a41bc9-69a2-42c7-ae86-3df3dbf3dfee}</Project>
+      <Name>TuristProject.Web.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

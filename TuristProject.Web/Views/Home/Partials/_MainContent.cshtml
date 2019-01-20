@@ -4,20 +4,14 @@
 
 
 <style>
-    .m-r-15 {
-        margin-right: 15px;
-    }
 
-    .m-l-15 {
-        margin-left: 15px;
-    }
 
-    .title-bellow {
-        height: 2em;
-    }
-   
-    td{
-        text-align: center;
+
+
+    @@media (max-width: 1500px) {
+        .block{
+            width: 100%;
+        }
     }
 </style>
 
@@ -26,9 +20,9 @@
         <h1 class="text-center"> Категорія "@ViewBag.CategoryName"</h1>
         <hr />
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6 block">
         <div class="row">
-            <h2>Вагові коефіцієнти за характеристикою "Безпека"</h2>
+            <h2 class="title-up">Вагові коефіцієнти за характеристикою "Безпека"</h2>
             @(Html.Kendo().Grid<GridModel>()
                         .Name("Safety")
                         .Columns(columns =>
@@ -39,13 +33,16 @@
                             columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
                             columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
                             columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
+                            columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
+                                "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
+                                .Width(70);
+                            columns.Bound(p => p.TuristDataType).Hidden();
                         })
                         .HtmlAttributes(new { style = "margin-bottom: 15px; margin-right: 15px;" })
                         .DataSource(dataSource => dataSource
                             .Ajax()
                             .PageSize(3)
-                            .ServerOperation(false)
-                            //.Read(read => read.Action(ViewBag.GetSafeties, "Home"))
+                            .ServerOperation(true)
                             .Read(read => read.Action("GetGridTuristData", "Home").Data("safetyParams"))
                         ))
 
@@ -56,7 +53,7 @@
         <div class="col-lg-12">
             <div id="example">
                 <div class="k-content wide">
-                    <div id="chartSafety"></div>
+                    <div id="chartSafety" style="margin: auto;"></div>
                 </div>
                 <script>
                     $(function() {
@@ -95,7 +92,7 @@
                                 }
                             });
 
-                            $("#chartSafety").css("width", "100%").css("height", "500px").data("kendoChart").resize();
+                            $("#chartSafety").css("width", "700px").css("height", "500px").data("kendoChart").resize();
                         }
 
                         $(document).ready(createChart);
@@ -107,9 +104,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6 block">
         <div class="row">
-            <h2 class="m-l-15">Вагові коефіцієнти за характеристикою "Комфорт"</h2>
+            <h2 class="m-l-15 title-up">Вагові коефіцієнти за характеристикою "Комфорт"</h2>
             @(Html.Kendo().Grid<GridModel>()
                         .Name("Comfort")
                         .Columns(columns =>
@@ -120,13 +117,16 @@
                             columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
                             columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
                             columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
+                            columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
+                                "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
+                                .Width(70);
+                            columns.Bound(p => p.TuristDataType).Hidden();
                         })
                         .HtmlAttributes(new { style = "margin-bottom: 15px; margin-left: 15px;" })
                         .DataSource(dataSource => dataSource
                             .Ajax()
                             .PageSize(3)
-                            .ServerOperation(false)
-                            //.Read(read => read.Action(ViewBag.GetComforts, "Home"))
+                            .ServerOperation(true)
                             .Read(read => read.Action("GetGridTuristData", "Home").Data("comfortParams"))
                         ))
 
@@ -137,7 +137,7 @@
         <div class="col-lg-12">
             <div id="example">
                 <div class="k-content wide">
-                    <div id="chartComfort"></div>
+                    <div id="chartComfort" style="margin: auto;"></div>
                 </div>
                 <script>
                     $(function() {
@@ -176,7 +176,7 @@
                                 }
                             });
 
-                            $("#chartComfort").css("width", "100%").css("height", "500px").data("kendoChart").resize();
+                            $("#chartComfort").css("width", "700px").css("height", "500px").data("kendoChart").resize();
                         }
 
                         $(document).ready(createChart);
@@ -193,7 +193,7 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-lg-6 block">
         <div class="row">
             <h2 class="title-bellow">Вагові коефіцієнти за характеристикою "Інформативність"</h2>
             @(Html.Kendo().Grid<GridModel>()
@@ -206,13 +206,16 @@
                             columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
                             columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
                             columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
+                            columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
+                                "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
+                                .Width(70);
+                            columns.Bound(p => p.TuristDataType).Hidden();
                         })
                         .HtmlAttributes(new { style = "margin-bottom: 15px; margin-right: 15px;" })
                         .DataSource(dataSource => dataSource
                             .Ajax()
                             .PageSize(3)
-                            .ServerOperation(false)
-                            //.Read(read => read.Action(ViewBag.GetInformative, "Home"))
+                            .ServerOperation(true)
                             .Read(read => read.Action("GetGridTuristData", "Home").Data("informParams"))
                         ))
 
@@ -223,7 +226,7 @@
         <div class="col-lg-12">
             <div id="example">
                 <div class="k-content wide">
-                    <div id="chartInformative"></div>
+                    <div id="chartInformative" style="margin: auto;"></div>
                 </div>
                 <script>
                     $(function() {
@@ -262,7 +265,7 @@
                                 }
                             });
 
-                            $("#chartInformative").css("width", "100%").css("height", "500px").data("kendoChart").resize();
+                            $("#chartInformative").css("width", "700px").css("height", "500px").data("kendoChart").resize();
                         }
 
                         $(document).ready(createChart);
@@ -274,7 +277,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6 block">
         <div class="row">
             <h2 class="m-l-15 title-bellow">Вагові коефіцієнти за характеристикою "Кваліфікованість персоналу"</h2>
             @(Html.Kendo().Grid<GridModel>()
@@ -287,13 +290,16 @@
                               columns.Bound(p => p.TransportationCoefficient).Title("Коефіцієнт<br/> транспортних<br/> послуг");
                               columns.Bound(p => p.ExcursionCoefficient).Title("Коефіцієнт<br/> екскурсійних<br/> послуг");
                               columns.Bound(p => p.AverageRateCoefficient).Title("Середньостатистичний<br/> показник рівня якості");
+                              columns.Template(e => { }).Title("<span class='row'>Дія</span>").ClientTemplate(
+                                  "<a  data-placement='top' title='Редагувати' style='margin-right: 5px;' class='btn btn-success btn-xs' href='/home/editcharacteristics?turistType=" + ViewBag.TuristType + "&dataType=#: data.TuristDataType #&companyNumber=#: data.CompanyNumber #'><i class='fa fa-edit color-green'></i></a>")
+                                  .Width(70);
+                              columns.Bound(p => p.TuristDataType).Hidden();
                           })
                           .HtmlAttributes(new { style = "margin-bottom: 15px; margin-left: 15px;" })
                           .DataSource(dataSource => dataSource
                               .Ajax()
                               .PageSize(3)
-                              .ServerOperation(false)
-                              //.Read(read => read.Action(ViewBag.GetStaffQualification, "Home"))
+                              .ServerOperation(true)
                               .Read(read => read.Action("GetGridTuristData", "Home").Data("qualificParams"))
                           ))
 
@@ -304,7 +310,7 @@
         <div class="col-lg-12">
             <div id="example">
                 <div class="k-content wide">
-                    <div id="chartStaffQualification"></div>
+                    <div id="chartStaffQualification" style="margin: auto;"></div>
                 </div>
                 <script>
                     $(function() {
@@ -343,7 +349,7 @@
                                 }
                             });
 
-                            $("#chartStaffQualification").css("width", "100%").css("height", "500px").data("kendoChart").resize();
+                            $("#chartStaffQualification").css("width", "700px").css("height", "500px").data("kendoChart").resize();
                         }
 
                         $(document).ready(createChart);

@@ -1,0 +1,122 @@
+﻿@using Kendo.Mvc.UI
+@using TuristProject.Web.Models.Shared
+
+@model TuristProject.Web.Models.Shared.CarecteristicModel
+
+@{
+    ViewBag.Title = "EditCharacteristics";
+}
+
+@using (Html.BeginForm("EditCharacteristics", "Home", FormMethod.Post, new
+{
+    enctype = "multipart/form-data",
+    @class = "form-horizontal",
+    id = "edit-form"
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2 style="text-align: center;">Категорія : @ViewBag.TuristType</h2>
+        <h2 style="text-align: center;">Редагування вагових коефіцієнтів за характеристикою «@ViewBag.TurisDataType»</h2>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(x => x.TuristType)
+        @Html.HiddenFor(x => x.OldCompanyNumber)
+        @Html.HiddenFor(x => x.TuristDataType)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyNumber, htmlAttributes: new {@class = "control-label col-md-5"})
+            <div class="col-md-7">
+                @(Html.Kendo().DropDownListFor(model => model.CompanyNumber).DataTextField("Name").DataValueField("Id").HtmlAttributes(new
+                  {
+                      style = "width:280px"
+                  }).Events(e => e.Select("onSelectedCategory")).BindTo((IEnumerable<BaseDictionaryDropdownModel>) ViewBag.Companies))
+                @Html.ValidationMessageFor(model => model.CompanyNumber, "", new
+                {
+                    @class = "text-danger"
+                })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResidenceCoefficient, htmlAttributes: new {@class = "control-label col-md-5"})
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ResidenceCoefficient, new { htmlAttributes = new { type = "number", @class = "form-control", data_val_check_input="true" } })
+                @Html.ValidationMessageFor(model => model.ResidenceCoefficient, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FoodCoefficient, htmlAttributes: new {@class = "control-label col-md-5"})
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.FoodCoefficient, new {htmlAttributes = new { type = "number", @class = "form-control", data_val_check_input = "true" } })
+                @Html.ValidationMessageFor(model => model.FoodCoefficient, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransportationCoefficient, htmlAttributes: new {@class = "control-label col-md-5"})
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.TransportationCoefficient, new {htmlAttributes = new { type = "number", @class = "form-control", data_val_check_input = "true" } })
+                @Html.ValidationMessageFor(model => model.TransportationCoefficient, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExcursionCoefficient, htmlAttributes: new {@class = "control-label col-md-5"})
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ExcursionCoefficient, new {htmlAttributes = new { type = "number", @class = "form-control", data_val_check_input = "true" } })
+                @Html.ValidationMessageFor(model => model.ExcursionCoefficient, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-7">
+                <input type="submit" value="Редагувати" class="btn btn-success"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-md-offset-2">
+    @Html.ActionLink($"Вернутись на сторінку '{Convert.ToString(ViewBag.TuristType)}'", $"{Convert.ToString(ViewBag.BackAction)}", null, new Dictionary<string, object>{ {"class", "btn btn-primary" } })
+</div>
+
+
+<script>
+    var turistData =
+        @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewBag.TuristData));
+
+    function onSelectedCategory(e) {
+        var id = e.dataItem.Id;
+        var dataForCompany = turistData.filter(function(p) {
+            return p.CompanyNumber == id;
+        })[0];
+
+        var formId = '#edit-form';
+        $(formId + ' [name=ResidenceCoefficient]').val("");
+        $(formId + ' [name=FoodCoefficient]').val("");
+        $(formId + ' [name=TransportationCoefficient]').val("");
+        $(formId + ' [name=ExcursionCoefficient]').val("");
+        $(formId + ' [name=ResidenceCoefficient]').val(dataForCompany.ResidenceCoefficient);
+        $(formId + ' [name=FoodCoefficient]').val(dataForCompany.FoodCoefficient);
+        $(formId + ' [name=TransportationCoefficient]').val(dataForCompany.TransportationCoefficient);
+        $(formId + ' [name=ExcursionCoefficient]').val(dataForCompany.ExcursionCoefficient);
+    }
+
+
+    $(function () {
+
+        $.validator.addMethod("data-val-check-input",
+            function(value) {
+                if (parseFloat(value) >= 0 && parseFloat(value) <= 1) {
+                    return true;
+                }
+                return false;
+            },
+            "Значення мусить бути в діапазоні від 0 до 1");
+
+    });
+
+</script>

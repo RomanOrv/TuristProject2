@@ -12,17 +12,20 @@ namespace TuristProject.Web.Models.Shared
         public int CompanyNumber { get; set; }
 
         [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Показник проживання")]
-        public decimal ResidenceCoefficient { get; set; }
+        public decimal? ResidenceCoefficient { get; set; }
 
         [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Показник харчування")]
-        public decimal FoodCoefficient { get; set; }
+        public decimal? FoodCoefficient { get; set; }
 
         [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Показник транспортних послуг")]
-        public decimal TransportationCoefficient { get; set; }
+        public decimal? TransportationCoefficient { get; set; }
 
         [Required(ErrorMessage = "Це поле обов'язкове"), Display(Name = "Показник екскурсійних послуг")]
-        public decimal ExcursionCoefficient { get; set; }
+        public decimal? ExcursionCoefficient { get; set; }
 
         public decimal AverageRateCoefficient { get; set; }
+
+        public int TuristDataType { get; set; }
+        public int CompanyId { get; set; }
     }
 }

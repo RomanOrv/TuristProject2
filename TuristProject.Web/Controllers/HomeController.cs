@@ -57,6 +57,122 @@ namespace TuristProject.Web.Controllers
             return View();
         }
 
+
+        public ActionResult AllData()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditCharacteristics(int turistType, int dataType, int companyNumber)
+        {
+          var turistData = _turistRepository.GetTuristDataByType(dataType).Select(y =>
+              new CarecteristicModel
+              {
+                  CompanyNumber = y.CompanyId,
+                  ResidenceCoefficient = y.Residence,
+                  FoodCoefficient = y.Food,
+                  TransportationCoefficient = y.Transportation,
+                  ExcursionCoefficient = y.Excursion,
+                  TuristDataType = y.TuristDataType,
+                  TuristType = turistType,
+                  OldCompanyNumber = y.CompanyId,
+              }).ToList();
+            var companyTuristData = turistData.First(x => x.CompanyNumber == companyNumber);
+            var companies = _turistRepository.GetCompanies();
+            var companiesByTuristType = _turistRepository.GetCompaniesByTuristType(turistType);
+            var companiesForDropdown = companies.Where(x => !companiesByTuristType.Contains(x.CompanyId) || (companiesByTuristType.Contains(x.CompanyId) && x.CompanyId == companyNumber)).ToList();
+            ViewBag.Companies = companiesForDropdown.Select(x => new BaseDictionaryDropdownModel{Id = x.CompanyId, Name = x.CompanyNumber.ToString()});
+            ViewBag.TuristData = turistData;
+
+            var turistTypeText = string.Empty;
+            var backAction = string.Empty;
+            switch ((ETuristType)turistType)
+            {
+                case ETuristType.Child:
+                    turistTypeText = "Туристи з дітьми";
+                    backAction = "Index";
+                    break;
+                case ETuristType.Young:
+                    turistTypeText = "Молодь";
+                    backAction = "Young";
+                    break;
+                case ETuristType.MiddleAge:
+                    turistTypeText = "Середній вік";
+                    backAction = "MiddleAge";
+                    break;
+                case ETuristType.OldAge:
+                    turistTypeText = "Третій вік";
+                    backAction = "OldAge";
+                    break;
+            }
+            ViewBag.TuristType = turistTypeText;
+            ViewBag.BackAction = backAction;
+
+            var turistDataTypeText = string.Empty;
+            switch ((ETuristDataType)dataType)
+            {
+                case ETuristDataType.Safety:
+                    turistDataTypeText = "Безпека";
+                    break;
+                case ETuristDataType.Comfort:
+                    turistDataTypeText = "Комфорт";
+                    break;
+                case ETuristDataType.Informative:
+                    turistDataTypeText = "Інформативність";
+                    break;
+                case ETuristDataType.StaffQualification:
+                    turistDataTypeText = "Кваліфікованість персоналу";
+                    break;
+            }
+            ViewBag.TurisDataType = turistDataTypeText;
+
+            return View(companyTuristData);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditCharacteristics(CarecteristicModel model)
+        {
+            _turistRepository.EditCharacteristics(model);
+            var action = string.Empty;
+
+            switch ((ETuristType)model.TuristType)
+            {
+                case ETuristType.Child:
+                    action = "Index";
+                    break;
+                case ETuristType.Young:
+                    action = "Young";
+                    break;
+                case ETuristType.MiddleAge:
+                    action = "MiddleAge";
+                    break;
+                case ETuristType.OldAge:
+                    action = "OldAge";
+                    break;
+            }
+
+            return RedirectToAction(action);
+        }
+
+        public ActionResult GetGridAllData([DataSourceRequest] DataSourceRequest request, int dataType)
+        {
+            var models =
+                this._turistRepository.GetTuristDataByType(dataType).Select(y =>
+                    new GridModel
+                    {
+                        CompanyNumber = y.CompanyId,
+                        ResidenceCoefficient = y.Residence,
+                        FoodCoefficient = y.Food,
+                        TransportationCoefficient = y.Transportation,
+                        ExcursionCoefficient = y.Excursion,
+                        AverageRateCoefficient = Math.Round((y.Residence + y.Food + y.Transportation + y.Excursion) / 4, 2)
+                    }).ToList();
+
+            return Json(models.OrderBy(x => x.CompanyNumber).ToDataSourceResult(request));
+        }
+
         public ActionResult GetGridTuristData([DataSourceRequest] DataSourceRequest request, int turistType, int dataType)
         {
             var models =
@@ -68,6 +184,7 @@ namespace TuristProject.Web.Controllers
                         FoodCoefficient = y.Food,
                         TransportationCoefficient = y.Transportation,
                         ExcursionCoefficient = y.Excursion,
+                        TuristDataType = y.TuristDataType,
                         AverageRateCoefficient = Math.Round((y.Residence + y.Food + y.Transportation + y.Excursion)/4, 2)
                     }).ToList();
 
@@ -102,10 +219,10 @@ namespace TuristProject.Web.Controllers
                 chart.name = $"Туристична організація №{m.CompanyNumber}.";
                 var data = new List<decimal>();
                 data.Add(m.AverageRateCoefficient);
-                data.Add(m.FoodCoefficient);
-                data.Add(m.TransportationCoefficient);
-                data.Add(m.ExcursionCoefficient);
-                data.Add(m.ResidenceCoefficient);
+                data.Add(m.FoodCoefficient.Value);
+                data.Add(m.TransportationCoefficient.Value);
+                data.Add(m.ExcursionCoefficient.Value);
+                data.Add(m.ResidenceCoefficient.Value);
                 chart.data.AddRange(data);
                 chartsData.Add(chart);
             }
